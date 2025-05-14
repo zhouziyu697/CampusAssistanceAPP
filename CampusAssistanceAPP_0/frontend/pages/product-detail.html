@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情 - 校园互助平台</title>
+    <link rel="stylesheet" href="../src/assets/css/style.css">
+    <link rel="stylesheet" href="../src/assets/css/button-fix.css">
+    <style>
+        /* 商品详情页样式*/
+        .detail-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            padding: 8px 15px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .product-content {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .product-images {
+            flex: 0 0 50%;
+        }
+
+        .main-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 28px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .original-price {
+            font-size: 18px;
+            color: #777;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .product-meta {
+            margin: 20px 0;
+        }
+
+        .meta-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .meta-label {
+            font-weight: bold;
+            min-width: 80px;
+        }
+
+        .product-description {
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .buy-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .contact-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .favorite-btn {
+            background-color: #f1f1f1;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .favorite-btn.active {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .seller-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .seller-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .seller-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .seller-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .related-products {
+            margin-top: 40px;
+        }
+
+        .related-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .related-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .related-info {
+            padding: 10px;
+        }
+
+        .related-title {
+            font-size: 14px;
+            margin: 0 0 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .related-price {
+            font-size: 16px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* 消息表单 */
+        .message-form {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 15px;
+        }
+
+        .send-btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* 图片导航区域样式 */
+        .image-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .image-thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 5px 0;
+            margin: 0 10px;
+            flex: 1;
+        }
+
+        .thumbnail {
+            width: 70px;
+            height: 70px;
+            border-radius: 4px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            opacity: 1;
+            border: 2px solid #3498db;
+        }
+
+        .nav-btn {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #ddd;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .product-content {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+
+            .action-btn {
+                flex: 1 0 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 导航栏-->
+        <nav class="navbar">
+            <div class="nav-brand">校园互助平台</div>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="market.html" class="active">二手市场</a>
+                <a href="express.html">快递代领</a>
+                <a href="profile.html">个人中心</a>
+            </div>
+        </nav>
+
+        <!-- 商品详情内容 -->
+        <div class="detail-container">
+            <div class="detail-header">
+                <button class="back-btn" id="backBtn">返回列表</button>
+            </div>
+
+            <div class="product-content">
+                <div class="product-images" id="mainImageContainer">
+                    <img src="" alt="商品主图" class="main-image" id="mainImage" style="display:none;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22120%22%20height%3D%22120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23eee%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2240%22%20y%3D%2264.5%22%3E无图片%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';">
+                    <div class="image-navigation">
+                        <button class="nav-btn" id="prevImage" disabled>&lt;</button>
+                        <div class="image-thumbnails" id="thumbnailsContainer"></div>
+                        <button class="nav-btn" id="nextImage" disabled>&gt;</button>
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <h1 class="product-title" id="productTitle">9成新计算机网络教材</h1>
+                    <div class="product-price">
+                        ¥ <span id="productPrice">25.00</span>
+                        <span class="original-price">¥ 50.00</span>
+                    </div>
+
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">商品分类:</span>
+                            <span id="productCategory">教材书籍</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">商品成色:</span>
+                            <span id="productCondition">9成新</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">发布时间:</span>
+                            <span id="publishTime">2023-06-01 10:30</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">浏览次数:</span>
+                            <span id="viewCount">32</span>
+                        </div>
+                    </div>
+
+                    <div class="product-description">
+                        <h3>商品描述</h3>
+                        <p id="productDescription">
+                            全新正版教材，适用于计算机网络课程，仅翻阅过几次，几乎全新。内页干净无笔记，无缺页。原价50元，现在半价出售。校内当面交易，方便快捷。有需要的同学请联系我。
+                        </p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn buy-btn" id="buyBtn">立即购买</button>
+                        <button class="action-btn contact-btn" id="contactBtn">联系卖家</button>
+                        <button class="action-btn favorite-btn" id="favoriteBtn">收藏</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seller-info">
+                <div class="seller-header">
+                    <div class="seller-avatar">👤</div>
+                    <div>
+                        <div class="seller-name" id="sellerName">张同学</div>
+                        <div>发布商品<span id="sellerProductCount">5</span> 件商品</div>
+                    </div>
+                </div>
+                <p>校内交易，当面验货付款。不议价，请看清商品描述再联系。</p>
+            </div>
+
+            <div class="message-form">
+                <h3>留言咨询</h3>
+                <textarea class="message-input" placeholder="对这个商品有什么疑问？在这里留言给卖家..."></textarea>
+                <button class="send-btn" id="sendMessageBtn">发送留言</button>
+            </div>
+
+            <div class="related-products">
+                <h2 class="related-title">相关商品推荐</h2>
+                <div class="related-grid">
+                    <div class="related-card" data-id="101">
+                        <img src="../images/cc8fd9af524d9f81f2ee84d0fe9747cd.png" alt="相关商品1" class="related-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjE3MCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiM5OTkiPuWbvueJh+acquWKoOi9vzwvdGV4dD48L3N2Zz4=';">
+                        <div class="related-info">
+                            <h3 class="related-title">数据结构教材</h3>
+                            <div class="related-price">¥ 30.00</div>
+                        </div>
+                    </div>
+                    <div class="related-card" data-id="102">
+                        <img src="../images/cc8fd9af524d9f81f2ee84d0fe9747cd.png" alt="相关商品2" class="related-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjE3MCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiM5OTkiPuWbvueJh+acquWKoOi9vzwvdGV4dD48L3N2Zz4=';">
+                        <div class="related-info">
+                            <h3 class="related-title">计算机组成原理</h3>
+                            <div class="related-price">¥ 28.00</div>
+                        </div>
+                    </div>
+                    <div class="related-card" data-id="103">
+                        <img src="../images/cc8fd9af524d9f81f2ee84d0fe9747cd.png" alt="相关商品3" class="related-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjE3MCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiM5OTkiPuWbvueJh+acquWKoOi9vzwvdGV4dD48L3N2Zz4=';">
+                        <div class="related-info">
+                            <h3 class="related-title">操作系统概念</h3>
+                            <div class="related-price">¥ 35.00</div>
+                        </div>
+                    </div>
+                    <div class="related-card" data-id="104">
+                        <img src="../images/cc8fd9af524d9f81f2ee84d0fe9747cd.png" alt="相关商品4" class="related-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjE3MCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiM5OTkiPuWbvueJh+acquWKoOi9vzwvdGV4dD48L3N2Zz4=';">
+                        <div class="related-info">
+                            <h3 class="related-title">软件工程导论</h3>
+                            <div class="related-price">¥ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 消息提示 -->
+        <div id="message" class="message" style="display: none;"></div>
+    </div>
+
+    <script>
+        // 设置服务器地址
+        const serverAddress = 'http://localhost:8080';
+        
+        // 获取URL参数
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // ====== 新增：根据type参数自动跳转求购详情页 ======
+        (function() {
+            const type = getUrlParameter('type');
+            const id = getUrlParameter('id');
+            if (type === 'wanted' && id) {
+                window.location.replace(`wanted-detail.html?id=${id}`);
+                return;
+            }
+        })();
+
+        // 显示消息提示
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // 返回按钮点击事件
+        document.getElementById('backBtn').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        // 收藏按钮点击事件
+        let isFavorite = false;
+        document.getElementById('favoriteBtn').addEventListener('click', function() {
+            if (!checkAuth()) return;
+            
+            // 禁用按钮防止重复点击
+            this.disabled = true;
+            
+            // 触发收藏/取消收藏操作
+            toggleFavorite(this);
+        });
+        
+        // 控制收藏/取消收藏状态
+        async function toggleFavorite(button) {
+            const productId = getUrlParameter('id') || '1';
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                showMessage('请先登录', 'warning');
+                button.disabled = false;
+                return;
+            }
+            
+            try {
+                let success = false;
+                
+                if (!isFavorite) {
+                // 添加收藏
+                    console.log(`尝试添加收藏，商品ID: ${productId}`);
+                    success = await serverAddFavorite(productId, token);
+                    if (success) {
+                        isFavorite = true;
+                        button.classList.add('active');
+                        button.textContent = '已收藏';
+                        showMessage('收藏成功', 'success');
+                        console.log('收藏成功，状态已更新');
+            } else {
+                        showMessage('收藏失败，请稍后再试', 'error');
+                        console.error('收藏请求失败');
+                    }
+                } else {
+                    // 移除收藏
+                    console.log(`尝试取消收藏，商品ID: ${productId}`);
+                    success = await serverRemoveFavorite(productId, token);
+                    if (success) {
+                        isFavorite = false;
+                button.classList.remove('active');
+                button.textContent = '收藏';
+                showMessage('已取消收藏', 'info');
+                        console.log('取消收藏成功，状态已更新');
+                        } else {
+                        showMessage('取消收藏失败，请稍后再试', 'error');
+                        console.error('取消收藏请求失败');
+                    }
+        }
+        
+                // 重新启用按钮
+                button.disabled = false;
+            } catch (error) {
+                console.error('收藏操作失败:', error);
+                showMessage('操作失败，请稍后再试', 'error');
+                button.disabled = false;
+            }
+        }
+        
+        // 添加到收藏
+        async function addToFavorites(productId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('用户未登录，无法收藏');
+                return false;
+            }
+            
+            return await serverAddFavorite(productId, token);
+        }
+        
+        // 从收藏中移除
+        async function removeFromFavorites(productId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('用户未登录，无法取消收藏');
+                return false;
+            }
+            
+            return await serverRemoveFavorite(productId, token);
+        }
+        
+        // 服务器添加收藏
+        async function serverAddFavorite(productId, token) {
+            try {
+                console.log('尝试添加收藏，商品ID:', productId);
+                
+                // 确保使用整数ID
+                const numericId = parseInt(productId, 10);
+                if (isNaN(numericId)) {
+                    console.error('无效的商品ID:', productId);
+                    return false;
+                }
+                
+                const response = await fetch(`${serverAddress}/api/profile/favorites`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        itemType: 'product',
+                        itemId: numericId 
+                    })
+                });
+                
+                console.log('添加收藏响应状态:', response.status);
+                
+                if (!response.ok) {
+                    console.error('服务器拒绝收藏请求:', response.status);
+                    // 尝试获取错误信息
+                    const text = await response.text();
+                    console.error('错误详情:', text);
+                }
+                
+                return response.ok;
+            } catch (error) {
+                console.error('服务器添加收藏出错:', error);
+                return false;
+            }
+        }
+        
+        // 服务器移除收藏
+        async function serverRemoveFavorite(productId, token) {
+            try {
+                console.log('尝试删除收藏，商品ID:', productId);
+                
+                // 确保productId是整数
+                const numericId = parseInt(productId, 10);
+                if (isNaN(numericId)) {
+                    console.error('无效的商品ID:', productId);
+                    return false;
+                }
+                
+                const response = await fetch(`${serverAddress}/api/profile/favorites/product/${numericId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                console.log('删除收藏响应状态:', response.status);
+                
+                if (!response.ok) {
+                    console.error('服务器拒绝取消收藏请求:', response.status);
+                    // 尝试获取错误信息
+                    const text = await response.text();
+                    console.error('错误详情:', text);
+                }
+                
+                return response.ok;
+            } catch (error) {
+                console.error('服务器移除收藏出错:', error);
+                return false;
+            }
+        }
+
+        // 立即购买按钮点击事件
+        document.getElementById('buyBtn').addEventListener('click', function() {
+            if (!checkAuth()) return;
+            
+            const productId = getUrlParameter('id') || '1';
+            showMessage('正在准备购买...', 'info');
+            
+            // 实际项目中，应该跳转到下单页面或发起购买请求
+            setTimeout(() => {
+                alert('此功能尚未实现，实际项目中应跳转到下单页面');
+            }, 1000);
+        });
+
+        // 联系卖家/管理商品按钮点击事件
+        document.getElementById('contactBtn').addEventListener('click', async function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('请先登录');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                // 获取商品ID
+                const productId = getUrlParameter('id') || '1';
+                
+                // 获取商品详情以获取卖家ID
+                const productResponse = await fetch(`${serverAddress}/api/products/${productId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!productResponse.ok) {
+                    throw new Error(`获取商品详情失败: ${productResponse.status}`);
+                }
+
+                const product = await productResponse.json();
+                const sellerId = product.userId;
+
+                if (!sellerId) {
+                    throw new Error('无法获取卖家信息');
+                }
+
+                // 获取当前用户信息
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                if (!currentUser || !currentUser.id) {
+                    throw new Error('无法获取当前用户信息');
+                }
+
+                // 检查是否是自己的商品
+                const isOwnProduct = currentUser.id === sellerId;
+
+                if (isOwnProduct) {
+                    // 如果是自己的商品，跳转到"我的商品"页面
+                    window.location.href = 'my-products.html';
+                } else {
+                    // 如果不是自己的商品，创建聊天
+                    const response = await fetch(`${serverAddress}/messages/chats/create?otherUserId=${sellerId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        credentials: 'include',
+                        mode: 'cors'
+                    });
+
+                    if (response.status === 401) {
+                        alert('登录已过期，请重新登录');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    if (response.status === 403) {
+                        alert('您没有权限执行此操作');
+                        return;
+                    }
+
+                    if (response.status === 500) {
+                        alert('服务器错误，请稍后重试');
+                        return;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`创建聊天失败: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    // 跳转到消息页面
+                    window.location.href = 'messages.html';
+                    
+                    // 存储聊天ID，以便在消息页面自动选中
+                    localStorage.setItem('selectedChatId', data.id);
+                }
+            } catch (error) {
+                console.error('操作失败:', error);
+                alert('操作失败，请稍后重试');
+            }
+        });
+
+        // 发送留言按钮点击事件
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            if (!checkAuth()) return;
+            
+            const messageInput = document.querySelector('.message-input');
+            const message = messageInput.value.trim();
+            
+            if (!message) {
+                showMessage('请输入留言内容', 'warning');
+                return;
+            }
+            
+            // 发送留言
+            showMessage('留言发送成功，等待卖家回复', 'success');
+            messageInput.value = '';
+            
+            // 实际项目中，应该调用API发送留言
+        });
+
+        // 检查登录状态
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                showMessage('请先登录', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+                return false;
+            }
+            return true;
+        }
+
+        // 相关商品点击事件
+        document.querySelectorAll('.related-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                window.location.href = `product-detail.html?id=${productId}`;
+            });
+        });
+
+        // 加载商品详情
+        async function loadProductDetail() {
+            const productId = getUrlParameter('id') || '1';
+            console.log('加载商品ID:', productId);
+            
+            try {
+                // 先检查收藏状态，再加载商品详情
+                // 这样可以避免两个异步操作互相干扰
+                await checkFavoriteStatus(productId);
+                
+                // 从API获取商品详情
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.warn('未找到认证token，可能无法获取完整数据');
+                }
+                
+                const response = await fetch(`${serverAddress}/api/products/${productId}`, {
+                    headers: {
+                        'Authorization': token ? `Bearer ${token}` : '',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'omit'
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`获取商品详情失败: ${response.status}`);
+                }
+                
+                const product = await response.json();
+                console.log('获取到商品详情:', product);
+                
+                // 处理来自后端的图片URL
+                if (product.images && Array.isArray(product.images)) {
+                    // 过滤掉无效的图片URL（包括placeholder.com链接）
+                    product.images = product.images.filter(img => {
+                        if (!img) return false;
+                        // 过滤掉placeholder.com链接
+                        if (img.includes('placeholder.com')) return false;
+                        return true;
+                    });
+                }
+                
+                // 更新页面内容
+                updateProductDetails(product);
+                
+                // 记录浏览历史
+                addToBrowseHistory(productId, product.title, product.price);
+            } catch (error) {
+                console.error('加载商品详情出错:', error);
+                showMessage('加载商品失败: ' + error.message, 'error');
+                
+                // 使用静态数据作为备份
+                console.log('使用静态数据作为备份');
+                // 记录浏览历史
+                addToBrowseHistory(productId);
+            }
+        }
+        
+        // 更新产品详情到页面
+        function updateProductDetails(product) {
+            // 更新标题和价格
+            document.getElementById('productTitle').textContent = product.title || '未知商品';
+            document.getElementById('productPrice').textContent = product.price ? product.price.toFixed(2) : '0.00';
+            
+            // 更新原价（如果有）
+            const originalPriceElement = document.querySelector('.original-price');
+            if (product.originalPrice) {
+                originalPriceElement.textContent = `¥ ${product.originalPrice.toFixed(2)}`;
+                originalPriceElement.style.display = 'inline';
+            } else {
+                originalPriceElement.style.display = 'none';
+            }
+            
+            // 更新商品分类
+            let categoryText = '未分类';
+            if (product.category) {
+                // 分类英文到中文的映射
+                const categoryMap = {
+                    'books': '教材书籍',
+                    'electronics': '电子产品',
+                    'daily': '日用百货',
+                    'clothing': '服装服饰',
+                    'sports': '体育器材',
+                    'others': '其他'
+                };
+                categoryText = categoryMap[product.category] || product.category;
+            }
+            document.getElementById('productCategory').textContent = categoryText;
+            
+            // 更新商品成色
+            let condition = '未知';
+            if (product.conditionLevel) {
+                switch(product.conditionLevel) {
+                    case 'new': condition = '全新'; break;
+                    case 'almost_new': condition = '9成新'; break;
+                    case 'slightly_used': condition = '7成新'; break;
+                    case 'used': condition = '5成新及以下'; break;
+                }
+            }
+            document.getElementById('productCondition').textContent = condition;
+            
+            // 更新发布时间
+            if (product.publishTime) {
+                const date = new Date(product.publishTime);
+                document.getElementById('publishTime').textContent = date.toLocaleString();
+            }
+            
+            // 更新浏览量
+            document.getElementById('viewCount').textContent = product.viewCount || '0';
+            
+            // 更新描述
+            document.getElementById('productDescription').textContent = product.description || '暂无描述';
+            
+            // 更新卖家信息
+            if (product.userName) {
+                document.getElementById('sellerName').textContent = product.userName;
+            }
+
+            // 检查是否是自己的商品
+            const currentUser = JSON.parse(localStorage.getItem('user'));
+            const isOwnProduct = currentUser && currentUser.id === product.userId;
+            
+            // 更新联系卖家按钮
+            const contactBtn = document.getElementById('contactBtn');
+            if (isOwnProduct) {
+                contactBtn.textContent = '管理商品';
+                contactBtn.classList.remove('contact-btn');
+                contactBtn.classList.add('manage-btn');
+                contactBtn.style.backgroundColor = '#2ecc71'; // 绿色
+            } else {
+                contactBtn.textContent = '联系卖家';
+                contactBtn.classList.remove('manage-btn');
+                contactBtn.classList.add('contact-btn');
+                contactBtn.style.backgroundColor = '#3498db'; // 蓝色
+            }
+            
+            // 更新产品图片
+            const mainImageContainer = document.getElementById('mainImageContainer');
+            const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+            
+            // 清空现有的缩略图
+            thumbnailsContainer.innerHTML = '';
+            
+            if (product.images && product.images.length > 0) {
+                // 处理图片路径
+                const processedImages = product.images.map(img => {
+                    // 检查图片路径是否需要添加服务器前缀
+                    return img.startsWith('/uploads/') ? serverAddress + img : img;
+                });
+                
+                // 设置主图
+                const mainImage = document.getElementById('mainImage');
+                mainImage.src = processedImages[0];
+                mainImage.dataset.index = 0;
+                mainImage.style.display = 'block';
+                
+                // 设置导航按钮状态
+                const prevBtn = document.getElementById('prevImage');
+                const nextBtn = document.getElementById('nextImage');
+                
+                prevBtn.disabled = true;
+                nextBtn.disabled = processedImages.length <= 1;
+                
+                // 生成缩略图
+                processedImages.forEach((imgSrc, index) => {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.className = 'thumbnail' + (index === 0 ? ' active' : '');
+                    thumbnail.src = imgSrc;
+                    thumbnail.alt = `${product.title} - 图片 ${index + 1}`;
+                    thumbnail.dataset.index = index;
+                    thumbnail.onerror = function() {
+                        this.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22120%22%20height%3D%22120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23eee%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2240%22%20y%3D%2264.5%22%3E无图片%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';
+                    };
+                    
+                    // 添加点击事件
+                    thumbnail.addEventListener('click', function() {
+                        switchMainImage(imgSrc, parseInt(this.dataset.index));
+                    });
+                    
+                    thumbnailsContainer.appendChild(thumbnail);
+                });
+                
+                // 添加导航按钮事件
+                prevBtn.onclick = function() {
+                    const currentIndex = parseInt(mainImage.dataset.index);
+                    if (currentIndex > 0) {
+                        switchMainImage(processedImages[currentIndex - 1], currentIndex - 1);
+                    }
+                };
+                
+                nextBtn.onclick = function() {
+                    const currentIndex = parseInt(mainImage.dataset.index);
+                    if (currentIndex < processedImages.length - 1) {
+                        switchMainImage(processedImages[currentIndex + 1], currentIndex + 1);
+                    }
+                };
+            } else {
+                // 没有图片时显示占位图
+                const mainImage = document.getElementById('mainImage');
+                mainImage.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22120%22%20height%3D%22120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23eee%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2240%22%20y%3D%2264.5%22%3E无图片%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';
+                mainImage.style.display = 'block';
+                
+                // 禁用导航按钮
+                document.getElementById('prevImage').disabled = true;
+                document.getElementById('nextImage').disabled = true;
+                
+                // 添加一个占位缩略图
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'thumbnail active';
+                thumbnail.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22120%22%20height%3D%22120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1%22%3E%3Crect%20width%3D%22120%22%20height%3D%22120%22%20fill%3D%22%23eee%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2240%22%20y%3D%2264.5%22%3E无图片%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';
+                thumbnail.alt = '无图片';
+                
+                thumbnailsContainer.appendChild(thumbnail);
+            }
+        }
+
+        // 切换主图片
+        function switchMainImage(imgSrc, index) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = imgSrc;
+            mainImage.dataset.index = index;
+            
+            // 更新导航按钮状态
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const totalImages = thumbnails.length;
+            
+            document.getElementById('prevImage').disabled = index === 0;
+            document.getElementById('nextImage').disabled = index === totalImages - 1;
+            
+            // 更新缩略图选中状态
+            thumbnails.forEach(thumb => {
+                if (parseInt(thumb.dataset.index) === index) {
+                    thumb.classList.add('active');
+                } else {
+                    thumb.classList.remove('active');
+                }
+            });
+            
+            // 确保选中的缩略图在可视区域内
+            const selectedThumb = document.querySelector('.thumbnail.active');
+            if (selectedThumb) {
+                selectedThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        // 添加到浏览历史
+        function addToBrowseHistory(productId, title, price) {
+            // 本地存储浏览历史
+            let history = JSON.parse(localStorage.getItem('browseHistory') || '[]');
+            
+            // 如果已存在，先移除
+            const index = history.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                history.splice(index, 1);
+            }
+            
+            // 添加到历史记录
+            history.unshift({
+                id: productId,
+                time: new Date().toISOString(),
+                title: title,
+                price: price
+            });
+            
+            // 只保留最多20条历史记录
+            if (history.length > 20) {
+                history = history.slice(0, 20);
+            }
+            
+            localStorage.setItem('browseHistory', JSON.stringify(history));
+            
+            // 向后端同步浏览记录
+            syncBrowseHistoryToServer(productId);
+        }
+
+        // 向后端同步浏览记录
+        function syncBrowseHistoryToServer(productId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log('用户未登录，不同步浏览记录到服务器');
+                return;
+            }
+            
+            console.log(`开始同步商品ID=${productId}的浏览记录到服务器...`);
+            
+            // 确保productId是数字
+            const numericProductId = parseInt(productId);
+            if (isNaN(numericProductId)) {
+                console.error('无效的商品ID:', productId);
+                return;
+            }
+            
+            fetch(`http://localhost:8080/api/profile/history/${numericProductId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('浏览历史已同步到服务器');
+                    return;
+                }
+                
+                console.error('同步浏览历史失败:', response.status);
+                
+                // 尝试获取详细错误信息
+                if (response.headers.get('content-type')?.includes('application/json')) {
+                    return response.json().then(errorData => {
+                        console.error('服务器返回错误详情:', errorData);
+                        throw new Error(errorData.error || '未知错误');
+                    });
+                } else {
+                    return response.text().then(errorText => {
+                        console.error('服务器返回错误文本:', errorText);
+                        throw new Error('服务器返回非JSON错误信息');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('同步浏览历史出错:', error);
+            });
+        }
+
+        // 新增：从服务器获取收藏状态
+        async function checkFavoriteStatus(productId) {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            
+            try {
+                console.log('开始检查商品收藏状态...');
+                
+                // 检查URL参数是否包含isFavorite=true (从我的收藏页面过来)
+                const urlParams = new URLSearchParams(window.location.search);
+                const isFavoriteParam = urlParams.get('isFavorite');
+                
+                if (isFavoriteParam === 'true') {
+                    console.log('从收藏页面跳转而来，直接标记为已收藏状态');
+                    isFavorite = true;
+                    const favoriteBtn = document.getElementById('favoriteBtn');
+                    if (favoriteBtn) {
+                        favoriteBtn.classList.add('active');
+                        favoriteBtn.textContent = '已收藏';
+                    }
+                    return;
+                }
+                
+                const response = await fetch(`${serverAddress}/api/profile/favorites`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const favorites = await response.json();
+                    console.log('获取到收藏列表:', favorites);
+                    
+                    // 检查当前商品是否已被收藏
+                    // 注意：需要将ID转为字符串进行比较，因为API可能返回数字或字符串
+                    const isProductFavorited = favorites.some(fav => 
+                        (fav.itemType === 'product' || !fav.itemType) && 
+                        fav.itemId.toString() === productId.toString()
+                    );
+                    
+                    console.log('商品收藏状态:', isProductFavorited ? '已收藏' : '未收藏');
+                    
+                    // 更新UI状态
+                    isFavorite = isProductFavorited;
+                    const favoriteBtn = document.getElementById('favoriteBtn');
+                    if (isFavorite) {
+                        favoriteBtn.classList.add('active');
+                        favoriteBtn.textContent = '已收藏';
+                    } else {
+                        favoriteBtn.classList.remove('active');
+                        favoriteBtn.textContent = '收藏';
+                    }
+                } else {
+                    console.error('获取收藏状态失败:', response.status);
+                }
+            } catch (error) {
+                console.error('检查收藏状态出错:', error);
+            }
+        }
+
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductDetail();
+        });
+    </script>
+</body>
+</html> 
